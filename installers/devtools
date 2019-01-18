@@ -12,6 +12,8 @@ dotheader "Setting up devtools..."
 
 brew_cask_install rubymine
 cp ../rubymine/.rubymine.vmoptions /Applications/Rubymine.app/Contents/bin/rubymine.vmoptions
+mkdir -p ~/Library/Preferences/RubyMine2018.3/colors
+cp ../rubymine/one_dark.icls  ~/Library/Preferences/RubyMine2018.3/colors
 killall rubymine
 
 brew_cask_install iterm2
