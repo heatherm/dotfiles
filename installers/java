@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+require_installer package-manager
+
+function install_latest_java() {
+    brew cask install java8
+}
+
+function install_jenv() {
+  if [ ! -e ~/.jenv ]; then`
+    \brew install jenv && brew upgrade jenv
+
+    install_latest_java
+  fi
+}
+
+dotheader "Setting up Java..."
+
+install_jenv

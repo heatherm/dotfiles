@@ -50,6 +50,9 @@ done
 export PATH="$HOME/.rvm/bin:$PATH"
 [ -f ~/.rvm/scripts/rvm ] && source ~/.rvm/scripts/rvm
 
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 SPACESHIP_VI_MODE_SHOW=false
