@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+require_installer package-manager
+
+function setup_zsh_symlinks() {
+  symlink_dotfile zshrc ~/.zshrc
+  symlink_dotfile zsh ~/.zsh
+  symlink_dotfile zsh/zshenv ~/.zshenv
+}
+
+function zsh_binary() {
+  echo /usr/local/bin/zsh
+}
+
+function update_shell_whitelist() {
+  local zshbin=$(zsh_binary)
+  if ! cat /etc/shells | grep -q $zshbin; then
+    echo "Adding $zshbin to /etc/shells, please enter your sudo password"
+
+    echo $zshbin | sudo tee -a /etc/shells > /dev/null
+  fi
+}
+
+function chsh_zsh() {
+  if [[ "$SHELL" != "$(zsh_binary)" ]]; then
+    dotsay "@b@blue[[Changing shell for $current_user...]]"
+
+    local current_user=$USER
+    sudo chsh -s $(zsh_binary) $current_user
+  fi
+}
+
+function install_fzf() {
+  if [ ! -d ~/.fzf ]; then
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+  fi
+
+  if [ ! -f $HOME/.fzf.zsh ]; then
+    ~/.fzf/install
+  fi
+}
+
+function install_fasd() {
+  install_package fasd
+}
+
+function install_zsh_prompt() {
+  local prompt_repo=$HOME/.zsh/vendor/spaceship-prompt
+  local install_location=$HOME/.zsh/functions/prompt_spaceship_setup
+
+  if [ ! -d $prompt_repo ]; then
+    git clone https://github.com/denysdovhan/spaceship-prompt.git \
+      $HOME/.zsh/vendor/spaceship-prompt
+  fi
+
+  symlink_dotfile zsh/vendor/spaceship-prompt/spaceship.zsh "$install_location"
+}
+
+dotheader "Setting up ZSH..."
+
+install_package zsh
+install_package zsh-completions
+
+install_package direnv
+install_fasd
+install_fzf
+
+setup_zsh_symlinks
+install_zsh_prompt
+
+update_shell_whitelist
+chsh_zsh

@@ -1,0 +1,8 @@
+# Ignore JetBrains editor config files
+
+.idea
+
+
+#OSX
+
+.DS_Store

@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+require_installer package-manager
+
+function install_latest_node() {
+  nvm install node
+}
+
+function install_nvm() {
+  if [ ! -e ~/.nvm ]; then`
+    \brew install nvm && brew upgrade nvm
+
+    install_latest_node
+  fi
+}
+
+dotheader "Setting up Node..."
+
+install_nvm

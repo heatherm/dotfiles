@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+require_installer package-manager
+
+function configure_ctags() {
+  symlink_dotfile ctags.d ~/.ctags.d
+}
+
+dotheader "Setting up devtools..."
+
+brew_cask_install rubymine
+cp ~/.rubymine.vmoptions /Applications/Rubymine.app/Contents/bin/rubymine.vmoptions
+killall rubymine
+
+brew_cask_install iterm2
+brew_cask_install spectacle
+
+brew_cask_install chromedriver
+
+brew_install fd
+
+brew_install postgres
+
+brew_cask_install phantomjs
+
+brew_install wakatime-cli
+brew_install coreutils
+
+brew_install imagemagick
+
+brew_install ctags
+brew_install global --with-ctags
+configure_ctags
+
+brew_install the_silver_searcher
+
+install_package sl
+install_package wget
+
+brew_install ack
+
+brew_install qpdf
+brew_install gnu-tar
+brew_install mysql
+brew_install heroku/brew/heroku
+brew_install hub
+brew_install nvm
+brew_install redis

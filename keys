@@ -1,0 +1,12 @@
+# Print public SSH key, generate it if necessary
+
+file="$HOME/.ssh/id_rsa.pub"
+if [ ! -f "$file" ]; then
+	ssh-keygen -t rsa
+fi
+
+cat "$file"
+
+echo "Please add this public key to Github \n"
+echo "https://github.com/account/ssh \n"
+read -p "Press [Enter] key after this..."

@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+require_installer package-manager
+require_installer fonts
+require_installer ruby
+require_installer python
+require_installer node
+
+function install_neovim() {
+  if ! brew_is_tapped "neovim/neovim"; then
+    brew_tap neovim/neovim
+  fi
+
+  brew_install neovim --HEAD
+}
+
+function setup_neovim_config() {
+  mkdir -p ~/.config
+  symlink_dotfile nvim ~/.config/nvim
+}
+
+function ensure_plugin_directory() {
+  mkdir -p ~/.local/share/nvim/plugged
+}
+
+function install_neovim_plugins() {
+  dotsay "@b@blue[[+ Installing nvim plugins]]"
+  pyenv activate py2neovim
+  nvim +PlugInstall +qall
+}
+
+function install_tern() {
+  npm install -g tern
+}
+
+dotheader "Setting up Neovim..."
+
+install_neovim
+setup_neovim_config
+install_tern
+ensure_plugin_directory
+install_neovim_plugins

@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+rvm $rvm_ruby_string do rvm gemset create global
+
+rvm $rvm_ruby_string@global do gem install --no-document \
+  awesome_print \
+  bundler \
+  hirb \
+  pry \
+  zeus

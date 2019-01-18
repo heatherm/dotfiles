@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+require_installer package-manager
+
+dotheader "Setting up biztools..."
+
+brew_cask_install skype
