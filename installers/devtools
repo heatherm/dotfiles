@@ -11,7 +11,7 @@ function configure_ctags() {
 dotheader "Setting up devtools..."
 
 brew_cask_install rubymine
-cp ~/.rubymine.vmoptions /Applications/Rubymine.app/Contents/bin/rubymine.vmoptions
+cp ../rubymine/.rubymine.vmoptions /Applications/Rubymine.app/Contents/bin/rubymine.vmoptions
 killall rubymine
 
 brew_cask_install iterm2
@@ -20,6 +20,8 @@ brew_cask_install spectacle
 brew_cask_install chromedriver
 
 brew_install fd
+
+brew_install tree
 
 brew_install postgres
 

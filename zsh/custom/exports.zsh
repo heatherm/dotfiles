@@ -16,6 +16,7 @@ export PATH="~/.fzf/bin:$PATH"
 export PATH="$HOME/.nvm/bin:$PATH"
 
 export NVM_DIR="$HOME/.nvm"
+. "$(brew --prefix nvm)/nvm.sh"
 
 export GTAGSLABEL="ctags"
 export GTAGSCONF="$HOME/.globalrc"

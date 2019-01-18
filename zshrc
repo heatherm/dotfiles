@@ -52,21 +52,42 @@ export PATH="$HOME/.rvm/bin:$PATH"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+SPACESHIP_VI_MODE_SHOW=false
+SPACESHIP_TIME_SHOW="true"
+SPACESHIP_TIME_COLOR="yellow"
+SPACESHIP_TIME_FORMAT="%D{%H:%M:%S} %F{white}\uf073%f %F{$SPACESHIP_TIME_COLOR}%D{%d.%m.%y}%f"
+SPACESHIP_EXIT_CODE_SHOW="true"
+SPACESHIP_GIT_BRANCH_PREFIX="\uF126 "
+SPACESHIP_GIT_STATUS_DIVERGED="%F{black}\uf074%f"
+SPACESHIP_GIT_STATUS_BEHIND="%F{magenta}\uf019%f"
+SPACESHIP_GIT_STATUS_AHEAD="%F{cyan}\uf093"
+SPACESHIP_GIT_STATUS_ADDED="%F{green}\uf457%f"
+SPACESHIP_GIT_STATUS_DELETED="%F{red}\uf014%f"
+SPACESHIP_GIT_STATUS_MODIFIED="%F{blue}\uf069%f"
+SPACESHIP_GIT_STATUS_RENAMED="%F{white}\uf044%f"
+SPACESHIP_GIT_STATUS_STASHED="%F{white}\uf01c%f"
+SPACESHIP_GIT_STATUS_UNMERGED="\ue726"
+SPACESHIP_GIT_STATUS_UNTRACKED="%F{yellow}\uf4a3%f"
+SPACESHIP_GIT_STATUS_PREFIX=" %F{red}\ue0b7%f"
+SPACESHIP_GIT_STATUS_SUFFIX="%F{red}\ue0b5%f"
+SPACESHIP_DIR_COLOR="blue"
+SPACESHIP_DIR_PREFIX="%F{$SPACESHIP_DIR_COLOR}\uf07c%f "
+SPACESHIP_CHAR_SYMBOL="\ue601 "
+
 SPACESHIP_PROMPT_ORDER=(
-  user          # Username section
-  dir           # Current directory section
-  host          # Hostname section
-  git           # Git section (git_branch + git_status)
-  hg            # Mercurial section (hg_branch  + hg_status)
-  exec_time     # Execution time
-  line_sep      # Line break
-  vi_mode       # Vi-mode indicator
-  jobs          # Background jobs indicator
+  user     # before prompt char
+  dir
+  host     #
+  git
+  node
+  ruby
+  exec_time
+  line_sep
+  pyenv
   exit_code     # Exit code section
   char          # Prompt character
 )
 
-SPACESHIP_PROMPT_ADD_NEWLINE=false
-SPACESHIP_CHAR_SYMBOL="❯"
-SPACESHIP_CHAR_SUFFIX=" "
-SPACESHIP_VI_MODE_SHOW=false
+SPACESHIP_RPROMPT_ORDER=(
+  time     #
+)
