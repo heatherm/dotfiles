@@ -1,7 +1,21 @@
-export DISABLE_AUTO_TITLE="true"
-setopt AUTO_PUSHD
-setopt PROMPT_SUBST
+# ======== Cache directory (for oh-my-zsh plugins) =========
+[ ! -d $HOME/.zcustom/cache ] && mkdir -p $HOME/.zcustom/cache
 
+export ZSH="$HOME/.zcustom"
+export ZSH_CACHE_DIR="$ZSH/cache"
+
+# ======== Random settings ===========
+
+# Disable auto title so tmux window titles don't get messed up.
+export DISABLE_AUTO_TITLE="true"
+
+# Maintain a stack of cd directory traversals for `popd`
+setopt AUTO_PUSHD
+
+# Allow extended matchers like ^file, etc
+set -o EXTENDED_GLOB
+
+# ========= History settings =========
 if [ -z "$HISTFILE" ]; then
   HISTFILE=$HOME/.zsh_history
 fi
@@ -18,22 +32,45 @@ setopt inc_append_history
 setopt share_history # share command history data
 setopt extended_glob
 
+# =========== Plugins ============
+source $HOME/.zsh/vendor/antigen.zsh
 
-fpath=(/usr/local/share/zsh-completions $fpath)
-fpath=($HOME/.zsh/functions $fpath)
+antigen bundle robbyrussell/oh-my-zsh plugins/git
 
-# The following lines were added by compinstall
-zstyle ':completion:*' completer _complete _ignored
-zstyle :compinstall filename '/Users/heathrmoor/.zshrc'
+if [ ! -f ~/.config/dotfiles/no-nvm ]; then
+  antigen bundle robbyrussell/oh-my-zsh plugins/nvm
+fi
 
-autoload -Uz compinit
-compinit
-# End of lines added by compinstall
+antigen bundle robbyrussell/oh-my-zsh plugins/pyenv
 
-for file in $HOME/.zsh/plugins/**/*.zsh
-do
-  source $file
-done
+if [ ! -f ~/.config/dotfiles/rbenv ]; then
+  antigen bundle robbyrussell/oh-my-zsh plugins/rvm
+else
+  antigen bundle robbyrussell/oh-my-zsh plugins/rbenv
+fi
+
+antigen bundle robbyrussell/oh-my-zsh plugins/vi-mode
+antigen bundle robbyrussell/oh-my-zsh plugins/zsh_reload
+
+antigen bundle dbalatero/fzf-git
+antigen bundle DarrinTisdale/zsh-aliases-exa
+antigen bundle chriskempson/base16-shell
+antigen bundle wookayin/fzf-fasd
+antigen bundle twang817/zsh-ssh-agent
+antigen bundle zsh-users/zsh-completions
+antigen bundle zdharma/fast-syntax-highlighting
+antigen bundle hlissner/zsh-autopair
+
+antigen theme romkatv/powerlevel10k
+
+antigen apply
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+eval "$(direnv hook zsh)"
+eval "$(fasd --init auto)"
+
+# =========== Custom settings ================
 
 for file in $HOME/.zsh/custom/**/*.zsh
 do
@@ -45,52 +82,10 @@ do
   source $file
 done
 
-# Add RVM to PATH for scripting. Make sure this is the last
-# PATH variable change.
-export PATH="$HOME/.rvm/bin:$PATH"
-[ -f ~/.rvm/scripts/rvm ] && source ~/.rvm/scripts/rvm
+# ======= RVM is a special snowflake and needs to be last ========
+if [ ! -f ~/.config/dotfiles/rbenv ]; then
+  export PATH="$HOME/.rvm/bin:$PATH"
+  [ -f ~/.rvm/scripts/rvm ] && source ~/.rvm/scripts/rvm
+fi
 
-export PATH="$HOME/.jenv/bin:$PATH"
-eval "$(jenv init -)"
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-SPACESHIP_VI_MODE_SHOW=false
-SPACESHIP_TIME_SHOW="true"
-SPACESHIP_TIME_COLOR="yellow"
-SPACESHIP_TIME_FORMAT="%D{%H:%M:%S} %F{white}\uf073%f %F{$SPACESHIP_TIME_COLOR}%D{%d.%m.%y}%f"
-SPACESHIP_EXIT_CODE_SHOW="true"
-SPACESHIP_GIT_BRANCH_PREFIX="\uF126 "
-SPACESHIP_GIT_STATUS_DIVERGED="%F{black}\uf074%f"
-SPACESHIP_GIT_STATUS_BEHIND="%F{magenta}\uf019%f"
-SPACESHIP_GIT_STATUS_AHEAD="%F{cyan}\uf093"
-SPACESHIP_GIT_STATUS_ADDED="%F{green}\uf457%f"
-SPACESHIP_GIT_STATUS_DELETED="%F{red}\uf014%f"
-SPACESHIP_GIT_STATUS_MODIFIED="%F{blue}\uf069%f"
-SPACESHIP_GIT_STATUS_RENAMED="%F{white}\uf044%f"
-SPACESHIP_GIT_STATUS_STASHED="%F{white}\uf01c%f"
-SPACESHIP_GIT_STATUS_UNMERGED="\ue726"
-SPACESHIP_GIT_STATUS_UNTRACKED="%F{yellow}\uf4a3%f"
-SPACESHIP_GIT_STATUS_PREFIX=" %F{red}\ue0b7%f"
-SPACESHIP_GIT_STATUS_SUFFIX="%F{red}\ue0b5%f"
-SPACESHIP_DIR_COLOR="blue"
-SPACESHIP_DIR_PREFIX="%F{$SPACESHIP_DIR_COLOR}\uf07c%f "
-SPACESHIP_CHAR_SYMBOL="\ue601 "
-
-SPACESHIP_PROMPT_ORDER=(
-  user     # before prompt char
-  dir
-  host     #
-  git
-  node
-  ruby
-  exec_time
-  line_sep
-  pyenv
-  exit_code     # Exit code section
-  char          # Prompt character
-)
-
-SPACESHIP_RPROMPT_ORDER=(
-  time     #
-)
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
