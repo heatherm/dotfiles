@@ -1,4 +1,5 @@
 alias l="ls -al"
+alias ml="cd ~/NYU/machine_learning"
 
 #git
 alias m="git checkout main"

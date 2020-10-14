@@ -11,6 +11,10 @@ export FZF_DEFAULT_COMMAND='fd --type file --follow --hidden \
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS="--ansi"
 
+# Editor
+export EDITOR=nvim
+export NVIM_TUI_ENABLE_TRUE_COLOR=1
+
 # OpenSSL
 export LDFLAGS="-L/usr/local/opt/openssl/lib"
 export CPPFLAGS="-I/usr/local/opt/openssl/include"
@@ -24,12 +28,6 @@ export PATH="/usr/local/opt/openssl/bin:$PATH"
 export PATH="$PATH:$HOME/.composer/vendor/bin"
 export PATH="./node_modules/.bin:$PATH"
 export PATH="~/.fzf/bin:$PATH"
-export PATH="$PATH:$HOME/.config/base16-shell"
-
-export DOOMDIR=$HOME/.doom.d
-
-# Cargo
-[ -f $HOME/.cargo/env ] && source $HOME/.cargo/env
 
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 
