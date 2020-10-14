@@ -42,16 +42,9 @@ if [ ! -f ~/.config/dotfiles/no-nvm ]; then
 fi
 
 antigen bundle robbyrussell/oh-my-zsh plugins/pyenv
-
-if [ ! -f ~/.config/dotfiles/rbenv ]; then
-  antigen bundle robbyrussell/oh-my-zsh plugins/rvm
-else
-  antigen bundle robbyrussell/oh-my-zsh plugins/rbenv
-fi
-
+antigen bundle robbyrussell/oh-my-zsh plugins/rbenv
 antigen bundle robbyrussell/oh-my-zsh plugins/vi-mode
 antigen bundle robbyrussell/oh-my-zsh plugins/zsh_reload
-
 antigen bundle dbalatero/fzf-git
 antigen bundle DarrinTisdale/zsh-aliases-exa
 antigen bundle chriskempson/base16-shell
@@ -60,7 +53,6 @@ antigen bundle twang817/zsh-ssh-agent
 antigen bundle zsh-users/zsh-completions
 antigen bundle zdharma/fast-syntax-highlighting
 antigen bundle hlissner/zsh-autopair
-
 antigen theme romkatv/powerlevel10k
 
 antigen apply
@@ -77,15 +69,9 @@ do
   source $file
 done
 
-for file in $HOME/.zsh/secrets/**/*.zsh
-do
-  source $file
-done
-
 # ======= RVM is a special snowflake and needs to be last ========
-if [ ! -f ~/.config/dotfiles/rbenv ]; then
-  export PATH="$HOME/.rvm/bin:$PATH"
-  [ -f ~/.rvm/scripts/rvm ] && source ~/.rvm/scripts/rvm
-fi
+export PATH="$HOME/.rvm/bin:$PATH"
+
+[ -f ~/.rvm/scripts/rvm ] && source ~/.rvm/scripts/rvm
 
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
